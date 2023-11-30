@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
-import { ThemeProvider } from '@/components/Providers/theme-provider';
+
 import { cn } from '@/lib/utils';
 import Providers from '@/components/Providers';
 
@@ -22,10 +22,7 @@ export default function RootLayout({
 		<html lang='en'>
 			<body
 				className={cn('min-h-screen font-sans antialiased', inter.className)}>
-				<Providers>
-					<Navbar />
-					{children}
-				</Providers>
+				<Providers>{children}</Providers>
 			</body>
 		</html>
 	);

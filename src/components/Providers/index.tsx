@@ -1,14 +1,19 @@
 import { ReactNode } from 'react';
-import { ThemeProvider } from './theme-provider';
+import ThemeProvider from './theme-provider';
+import SessionProvider from './SessionProvider';
+import { getServerSession } from 'next-auth';
 
-export default function Providers({ children }: { children: ReactNode }) {
+export default async function Providers({ children }: { children: ReactNode }) {
+	const session = await getServerSession();
 	return (
-		<ThemeProvider
-			attribute='class'
-			defaultTheme='system'
-			enableSystem
-			disableTransitionOnChange>
-			{children}
-		</ThemeProvider>
+		<SessionProvider session={session}>
+			<ThemeProvider
+				attribute='class'
+				defaultTheme='system'
+				enableSystem
+				disableTransitionOnChange>
+				{children}
+			</ThemeProvider>
+		</SessionProvider>
 	);
 }
