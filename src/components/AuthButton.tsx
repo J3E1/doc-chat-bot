@@ -2,19 +2,23 @@
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { signOut, signIn, useSession } from 'next-auth/react';
+import { useToast } from './ui/use-toast';
+import { useRouter } from 'next/navigation';
 
 type Props = {};
 export default function AuthButton({}: Props) {
 	const session = useSession();
+	const { toast } = useToast();
+	const router = useRouter();
 
-	const logOut = async () => await signOut({ redirect: false });
-
-	const logIn = async () =>
-		await signIn('credentials', {
-			email: 'email@ligma.com',
-			password: '12345',
-			redirect: false,
+	const logOut = async () => {
+		await signOut({ redirect: false });
+		router.push('/');
+		toast({
+			title: 'Logged out successfully!',
+			variant: 'primary',
 		});
+	};
 
 	return (
 		<>

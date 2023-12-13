@@ -1,8 +1,11 @@
+import { db } from '@/db';
 import NextAuth, { AuthOptions } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+// import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import bcrypt from 'bcrypt';
 
 export const authOptions: AuthOptions = {
-	// adapter: PrismaAdapter(prisma),
+	// adapter: PrismaAdapter(db),
 	providers: [
 		Credentials({
 			name: 'credentials ',
@@ -14,22 +17,27 @@ export const authOptions: AuthOptions = {
 				if (!credentials?.email || !credentials?.password)
 					throw new Error('Invalid credentials');
 
-				// const user = await prisma.user.findUnique({
-				// 	where: {
-				// 		email: credentials.email,
-				// 	},
-				// });
+				const user = await db.user.findUnique({
+					where: {
+						email: credentials.email,
+					},
+				});
 
-				// if (!user) throw new Error('No user found');
+				if (!user) throw new Error('No user found');
 
-				// const isPasswordIncorrect = await bcrypt.compare(
-				// 	credentials.password,
-				// 	user.hashedPassword!
-				// );
+				const isPasswordIncorrect = await bcrypt.compare(
+					credentials.password,
+					user.password!
+				);
 
-				// if (!isPasswordIncorrect) throw new Error('Invalid password');
+				if (!isPasswordIncorrect) throw new Error('Invalid password');
 
-				return { email: credentials.email, name: 'dog', id: 'ligma' };
+				return {
+					email: user.email,
+					id: user.id.toString(),
+					image: user.avatarUrl,
+					name: user.name,
+				};
 			},
 		}),
 	],
