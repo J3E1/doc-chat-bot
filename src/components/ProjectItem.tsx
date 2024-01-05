@@ -8,13 +8,14 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuTrigger,
 } from './ui/dropdown-menu';
+import Link from 'next/link';
 
 export default function ProjectItem() {
 	return (
 		<Card className='hover:shadow-md hover:cursor-pointer relative'>
 			<CardHeader className='py-4'>
 				<CardTitle className='text-xl hover:text-primary'>
-					Notifications
+					<Link href={'/app/bot/545'}>Notifications</Link>
 				</CardTitle>
 				<CardDescription>You have 3 unread messages.</CardDescription>
 			</CardHeader>

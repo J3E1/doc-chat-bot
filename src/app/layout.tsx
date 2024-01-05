@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Rubik, Poppins } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 
@@ -7,7 +7,8 @@ import { cn } from '@/lib/utils';
 import Providers from '@/components/Providers';
 import { Toaster } from '@/components/ui/toaster';
 
-const inter = Inter({ subsets: ['latin'] });
+const rubik = Rubik({ subsets: ['latin'] });
+const poppins = Poppins({ weight:['200','400','600'] ,subsets:['latin']});
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -22,7 +23,7 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body
-				className={cn('min-h-screen font-sans antialiased', inter.className)}>
+				className={cn('min-h-screen antialiased', poppins.className)}>
 				<Providers>
 					{children}
 					<Toaster />
